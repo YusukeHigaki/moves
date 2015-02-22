@@ -8,7 +8,7 @@ if (!isset($_GET['code']) || empty($_GET['code'])) {
     exit;
 }
 
-$obj = json_decode(@file_get_contens(
+$obj = json_decode(@file_get_contents(
     'https://api.moves-app.com/oauth/v1/access_token',
     false,
     stream_context_create(
