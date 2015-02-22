@@ -18,34 +18,41 @@ class api
     }
 
 
-    public function getSummary()
+    public function getSummary($day = null)
     {
-        $url = self::BASE_URL . self::SUMMARY . '/daily/20150220';
+        $url = $this->generateUrl($day, self::SUMMARY);
         return $this->getApiResponse($url);
     }
 
 
-    public function getActivities()
+    public function getActivities($day = null)
     {
-        $url = self::BASE_URL . self::ACTIVITIES . '/daily/20150220';
+        $url = self::BASE_URL . self::ACTIVITIES . "/daily/{$day}";
         return $this->getApiResponse($url);
     }
 
 
-    public function getPlaces()
+    public function getPlaces($day = null)
     {
-        $url = self::BASE_URL . self::PLACES . '/daily/20150220';
+        $url = self::BASE_URL . self::PLACES . "/daily/{$day}";
         return $this->getApiResponse($url);
     }
 
 
-    public function getStoryline($trackPoints = false)
+    public function getStoryline($day = null, $trackPoints = false)
     {
-        $url = self::BASE_URL . self::STORYLINE . '/daily/20150220';
+        $url = $this->generateUrl($day, self::STORYLINE);
         $params = [
             'trackPoints' => $trackPoints,
         ];
         return $this->getApiResponse($url, $params);
+    }
+
+
+    private function generateUrl($day = null, $url)
+    {
+        if ($day === null) $day = date('Ymd');
+        return self::BASE_URL . $url . "/daily/{$day}";
     }
 
 
@@ -56,6 +63,7 @@ class api
             $val = $val === true ? 'true' : 'false';
             $url .= "&{$key}={$val}";
         }
+        echo("<pre>");var_dump($url);echo("<pre>");
     	return json_decode(@file_get_contents($url));
     }
 
