@@ -63,7 +63,6 @@ class api
             $val = $val === true ? 'true' : 'false';
             $url .= "&{$key}={$val}";
         }
-        echo("<pre>");var_dump($url);echo("<pre>");
     	return json_decode(@file_get_contents($url));
     }
 
